@@ -1,0 +1,126 @@
+(footprint "PCB-TOUCHPAD"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "PCB resistive Touch-pad for touch-switch")
+	(property "Reference" "REF**"
+		(at -9.144 -2.54 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "f3ab0333-eb1b-41a5-bb82-499baef94b81")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify left bottom)
+		)
+	)
+	(property "Value" "PCB-TOUCHPAD"
+		(at 3.81 -2.54 0)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "75ae13c6-985d-4ff1-8376-3d508f4569f5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify left bottom)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "99334245-dc23-4a6d-a6bd-59e62662f42a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "c2f92454-b67d-482b-b226-79b2e4171f16")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "4e10a075-97c5-4997-b0d2-f56fb2a5261b")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_arc
+		(start -4 -0.9)
+		(mid 4.099147 -0.083645)
+		(end -3.959956 1.062427)
+		(stroke
+			(width 0.254)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "7684237d-f26d-4cad-995a-045f77eba80e")
+	)
+	(fp_circle
+		(center 0 0)
+		(end 0 3.9)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(fill none)
+		(layer "F.CrtYd")
+		(uuid "bea97232-a592-4fb8-8071-103871b81376")
+	)
+	(pad "1" smd custom
+		(at -5.1 0.1)
+		(size 1.524 1.524)
+		(layers "F.Cu" "F.Paste" "F.Mask")
+		(options
+			(clearance outline)
+			(anchor circle)
+		)
+		(primitives
+			(gr_line
+				(start 0 -0.1)
+				(end 8.495025 -0.1)
+				(width 0.381)
+			)
+			(gr_arc
+				(start 1.8 -0.9)
+				(mid 8.495025 -0.16168)
+				(end 1.831237 0.81934)
+				(width 0.8636)
+			)
+			(gr_arc
+				(start 6.999999 0.7)
+				(mid 3.038448 -0.1)
+				(end 6.999999 -0.9)
+				(width 0.8636)
+			)
+			(gr_circle
+				(center 5.1 -0.1)
+				(end 5.8 -0.1)
+				(width 0.1)
+				(fill yes)
+			)
+		)
+		(uuid "9e49f327-20f4-4e5b-93ed-63b911f2ea77")
+	)
+)

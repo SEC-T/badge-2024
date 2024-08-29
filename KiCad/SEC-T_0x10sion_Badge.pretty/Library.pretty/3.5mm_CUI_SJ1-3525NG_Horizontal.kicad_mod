@@ -1,0 +1,460 @@
+(footprint "3.5mm_CUI_SJ1-3525NG_Horizontal"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "TRS 3.5mm, horizontal, through-hole, https://www.cuidevices.com/product/resource/pdf/sj1-352xn.pdf")
+	(tags "TRS audio jack stereo horizontal")
+	(property "Reference" "REF**"
+		(at 0 7.6 180)
+		(layer "F.SilkS")
+		(uuid "1add7dcf-a760-4acf-a8df-7191842316d8")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "3.5mm_CUI_SJ1-3525NG_Horizontal"
+		(at 0 8.8 180)
+		(layer "F.Fab")
+		(uuid "6612f225-863e-4980-926d-c81f7a4c0ba5")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 -1.2 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5dd763af-b19c-46d7-b611-794fb189ab40")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 -1.2 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "87b43f88-e722-4fe0-a9f0-7872afe98c67")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 -1.2 180)
+		(unlocked yes)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "fcc3ef8c-8425-4c05-ab28-aa0bbbe4a25a")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole exclude_from_pos_files exclude_from_bom)
+	(fp_line
+		(start -6 6.5)
+		(end -6 -4.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "dcf98f86-aaf6-490c-98c3-b153f5552ef1")
+	)
+	(fp_line
+		(start 6 -4.5)
+		(end -6 -4.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.SilkS")
+		(uuid "6b6f082e-e47f-4a54-a416-d5305376c771")
+	)
+	(fp_line
+		(start 6 -4.5)
+		(end 6 6.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "11374064-f99a-4833-9a35-64656a6379df")
+	)
+	(fp_line
+		(start 6 6.5)
+		(end -6 6.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c4ed921b-5978-4907-b8ae-6b0640f1dea6")
+	)
+	(fp_line
+		(start -6.25 -5.95)
+		(end -6.25 -5.7)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "fea8efb1-2ef5-475a-af92-65909d0f7abe")
+	)
+	(fp_line
+		(start -6.25 -5.7)
+		(end -6.25 6.75)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "8a1bbd25-8cbb-424a-9b43-5d9e23660e59")
+	)
+	(fp_line
+		(start -6.25 6.75)
+		(end 6.25 6.75)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e5bc91ed-6863-431b-8065-13df5a5a19bf")
+	)
+	(fp_line
+		(start -3.25 -7.75)
+		(end -3.25 -5.95)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "ed8ec206-fcda-446a-9175-18a5c3a8bbe7")
+	)
+	(fp_line
+		(start -3.25 -5.95)
+		(end -6.25 -5.95)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "f84130ff-a1e0-4834-9cae-bfae1372f93a")
+	)
+	(fp_line
+		(start 3.25 -7.75)
+		(end -3.25 -7.75)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "518d3713-0903-49d2-b864-26e173b8a0f9")
+	)
+	(fp_line
+		(start 3.25 -5.95)
+		(end 3.25 -7.75)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "d9f9bc89-eae5-48cd-8b86-84d6abf51ccf")
+	)
+	(fp_line
+		(start 6.25 -5.95)
+		(end 3.25 -5.95)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "ff22bc1d-7252-46c8-aa56-2fcf3b0aed98")
+	)
+	(fp_line
+		(start 6.25 6.75)
+		(end 6.25 -5.95)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e37c8ee8-778f-4fb1-a382-58b7f13327aa")
+	)
+	(fp_line
+		(start -6 -4.7)
+		(end -6 6.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "c692bdd3-7f87-4426-a4f0-4d6ad56edfad")
+	)
+	(fp_line
+		(start -4.5 -5.7)
+		(end -4.5 -4.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "a299908d-8fba-44bb-b5be-a7436df93aae")
+	)
+	(fp_line
+		(start -4.5 -5.7)
+		(end -3 -5.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8c470310-04d8-41c3-adc3-7a545498423f")
+	)
+	(fp_line
+		(start -4.5 -4.7)
+		(end -6 -4.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "9f408fd4-cdec-42a6-b29a-045b39095465")
+	)
+	(fp_line
+		(start -3 -5.7)
+		(end -3 -7.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "3498781e-a632-473a-8750-c7318af73043")
+	)
+	(fp_line
+		(start -2 -7.5)
+		(end -2 -4.7)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "b6f51c18-3efd-4627-a77f-6d7cc1dccb64")
+	)
+	(fp_line
+		(start -2 -4.7)
+		(end 2 -4.7)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "d6f8847e-63f1-4d60-b6d0-26b3d97acaf0")
+	)
+	(fp_line
+		(start 2 -4.7)
+		(end 2 -7.5)
+		(stroke
+			(width 0.12)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "fe268b09-68ad-41a9-be41-1a6da3eae22d")
+	)
+	(fp_line
+		(start 3 -7.5)
+		(end -3 -7.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "290850ed-73e2-4ba6-869e-4fef127cbb88")
+	)
+	(fp_line
+		(start 3 -5.7)
+		(end 3 -7.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "60c30c46-20da-47d2-8dde-e79a9730c8eb")
+	)
+	(fp_line
+		(start 4.5 -5.7)
+		(end 3 -5.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "433d632b-1af0-4c6d-b40c-06543e114522")
+	)
+	(fp_line
+		(start 4.5 -5.7)
+		(end 4.5 -4.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "d2eed008-515f-4d80-8797-64a02ee1a5fb")
+	)
+	(fp_line
+		(start 4.5 -4.7)
+		(end 6 -4.7)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "6c9e6964-8f4f-4037-9cfa-40ec74f90ccb")
+	)
+	(fp_line
+		(start 6 -4.7)
+		(end 6 6.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "67f0fbee-d2a9-4d1e-b5f5-53c6e26db37e")
+	)
+	(fp_line
+		(start 6 6.5)
+		(end -6 6.5)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "d3c3fba2-2c99-4639-82b3-def615a0a111")
+	)
+	(fp_text user "PCB edge"
+		(at 0 -5.2 0)
+		(unlocked yes)
+		(layer "Dwgs.User")
+		(uuid "280aa230-a25f-414c-9d84-47f182621149")
+		(effects
+			(font
+				(size 0.5 0.5)
+				(thickness 0.09)
+				(bold yes)
+			)
+		)
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0.3 180)
+		(layer "F.Fab")
+		(uuid "085988cb-9879-4ac3-a25a-5a2bd7285627")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -5 -3.7 180)
+		(size 1.2 1.2)
+		(drill 1.2)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "0dcf70ee-cde7-482b-a3e5-44427c25dbc7")
+	)
+	(pad "" np_thru_hole circle
+		(at -5 -1.2 180)
+		(size 1.2 1.2)
+		(drill 1.2)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "a43ddcff-5f56-4ac9-9af6-caeb3e1e6b3b")
+	)
+	(pad "" np_thru_hole circle
+		(at 0 3.8 180)
+		(size 1.2 1.2)
+		(drill 1.2)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "c28e13f1-55b0-4023-8004-5c43f3cb0c59")
+	)
+	(pad "" np_thru_hole circle
+		(at 5 -3.7 180)
+		(size 1.2 1.2)
+		(drill 1.2)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "43e28b64-3f22-4d06-a9d9-1a6cbaeb55e4")
+	)
+	(pad "" np_thru_hole circle
+		(at 5 -1.2 180)
+		(size 1.2 1.2)
+		(drill 1.2)
+		(layers "F&B.Cu" "*.Mask")
+		(uuid "2a6783be-49b7-4a5e-8837-fde4f5b6b326")
+	)
+	(pad "1" thru_hole oval
+		(at 0 -1.2 180)
+		(size 2.5 1.6)
+		(drill oval 1.5 0.8)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "3ed7e64f-b114-42be-9bef-9a493d918a48")
+	)
+	(pad "2" thru_hole oval
+		(at -5 3.8)
+		(size 1.6 2.5)
+		(drill oval 0.8 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "9fc83e1c-4425-4cec-92d0-a925a45db0ce")
+	)
+	(pad "3" thru_hole oval
+		(at 5 3.8 180)
+		(size 1.6 2.5)
+		(drill oval 0.8 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "e54c28a1-dfb5-4e3f-8b5a-7dd641ca7f3c")
+	)
+	(pad "4" thru_hole oval
+		(at -2.5 3.8)
+		(size 1.6 2.5)
+		(drill oval 0.8 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1e85fd63-1943-4c11-8b94-66b8fbf95e55")
+	)
+	(pad "5" thru_hole oval
+		(at 2.5 3.8 180)
+		(size 1.6 2.5)
+		(drill oval 0.8 1.5)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "02b5eb1d-379e-426e-a14c-f52b3a21405a")
+	)
+	(model "${KICAD8_3DMODEL_DIR}/Connector_Audio.3dshapes/Jack_3.5mm_CUI_SJ1-3525N_Horizontal.wrl"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

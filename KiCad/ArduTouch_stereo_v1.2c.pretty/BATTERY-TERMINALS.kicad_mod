@@ -1,0 +1,166 @@
+(footprint "BATTERY-TERMINALS"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "Battery terminals with strain relief")
+	(property "Reference" "REF**"
+		(at -1.905 2.54 90)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "1456524c-76c0-4e4b-84a3-ce3052604850")
+		(effects
+			(font
+				(size 1.1684 1.1684)
+				(thickness 0.1016)
+			)
+			(justify left bottom)
+		)
+	)
+	(property "Value" "BATTERY-TERMINALS"
+		(at 3.175 2.54 90)
+		(unlocked yes)
+		(layer "F.Fab")
+		(uuid "36674e61-bd7e-4743-8669-031f0fb77592")
+		(effects
+			(font
+				(size 1.1684 1.1684)
+				(thickness 0.1016)
+			)
+			(justify left bottom)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d3b4d26e-b919-4af5-a776-c9afe1459a60")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "d8c8f71b-14b0-4da4-9b85-cd37e999b642")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "96fc3ce1-5655-4d02-b232-13c5418307b5")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(fp_line
+		(start -1.27 -3.81)
+		(end 1.27 -3.81)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "a9c0c137-8982-4830-8f10-43ca0bb5ad0f")
+	)
+	(fp_line
+		(start -1.27 3.175)
+		(end -1.27 -3.81)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "0038e63d-33cb-48d3-96d0-abf882c9bb3e")
+	)
+	(fp_line
+		(start -1.27 3.175)
+		(end 1.27 3.175)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "c460d3bc-5453-4647-bb10-1c3d51ffba98")
+	)
+	(fp_line
+		(start -0.4572 0.6604)
+		(end 0.4318 0.6604)
+		(stroke
+			(width 0.1524)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "7a02b0ce-9bcf-4154-bf47-dd969e5a064e")
+	)
+	(fp_line
+		(start 1.27 -3.81)
+		(end 1.27 3.175)
+		(stroke
+			(width 0.127)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "063e01ce-92b4-4252-b24f-0d6f46529e54")
+	)
+	(fp_text user "+"
+		(at -0.635 -0.2921 0)
+		(unlocked yes)
+		(layer "F.SilkS")
+		(uuid "cdbbf328-0225-4299-9431-36308ecfc61d")
+		(effects
+			(font
+				(size 1.1684 1.1684)
+				(thickness 0.1016)
+			)
+			(justify left bottom)
+		)
+	)
+	(pad "" np_thru_hole circle
+		(at -5.715 -2.54)
+		(size 1.5 1.5)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(uuid "c184eb7b-944b-4f6b-ae0d-f2484b03414b")
+	)
+	(pad "" np_thru_hole circle
+		(at -5.715 1.905)
+		(size 1.5 1.5)
+		(drill 1.5)
+		(layers "*.Cu" "*.Mask")
+		(uuid "18b75141-7d09-4afc-89d2-e480e82f9884")
+	)
+	(pad "+" thru_hole circle
+		(at 0 -2.54)
+		(size 1.6764 1.6764)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.1016)
+		(thermal_bridge_angle 0)
+		(uuid "6898a06e-def4-47b4-9548-fad3999519b6")
+	)
+	(pad "-" thru_hole circle
+		(at 0 1.905)
+		(size 1.6764 1.6764)
+		(drill 0.9)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(solder_mask_margin 0.1016)
+		(thermal_bridge_angle 0)
+		(uuid "c18bfc76-4e11-44c1-ba37-84b4022da1bc")
+	)
+)

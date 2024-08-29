@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "ArduTouch_stereo_v1.2c-eagle-import")(type "KiCad")(uri "${KIPRJMOD}/ArduTouch_stereo_v1.2c-eagle-import.kicad_sym")(options "")(descr ""))
+  (lib (name "SEC-T_ox10sion_Badge")(type "KiCad")(uri "${KIPRJMOD}/SEC-T_ox10sion_Badge.kicad_sym")(options "")(descr ""))
+)
