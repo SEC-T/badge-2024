@@ -33,15 +33,29 @@ The SEC-T Synth Badge kit is fully Open Hardware, with a CC BY-SA 4.0 license.
 
 ## Demo Videos
 
-The Synth Badge comes pre-programmed with a synth called Quadrant.  
+The Synth Badge comes pre-programmed with a synth called __Quadrant__.  
 Quadrant is somewhat like a looper.  Every time you play a note it goes into the loop.  You can control the speed of the loop, and you can also make the sound warp (detune) every time through the loop.  
-There is the default sound for Quadrant, plus 4 presets -- all 5 of these have very different sounds!  
+There is the default patch for Quadrant, plus 4 presets -- all 5 of these have very different sounds!  
 In addition to changing the loop speed and changing the warp-factor, there are many parameters that you can play with, some of which change the sounds in subtle ways, others which change the sounds a lot.  
 
-These demo videos give you a very small taste of the sounds Quadrant can make. 
+These demo videos give you a very small taste of the various sounds Quadrant can make. 
 
 ___NOTE__:  The demo videos use the prototype of the SEC-T 0x10sion Music Synthesizer Badge kit._  
 In particular, the two red buttons are reversed (left and right).  
+
+__Basic Functionality of Quadrant__  
+* Single-Click the right red button to go up an octave
+* Single-Click the left red button to go down an octave
+* Double-Click the right red button and then hit one of the first four lower touch-keys to choose a preset
+  * The left-most touch-key is "C" -- Scaffold
+  * The next touch-key is "D" -- Farsy
+  * "E" -- Teleprompt
+  * "F" -- Glacial
+* The Top Pot controls the Warp-factor
+* The Bottom Pot controls the speed of the loop
+* Pot A controls tremelo speed
+* Pot B controls tremelo depth
+* Press-and-hold on the left and right red buttons will make the Red and Blue LEDs light or blink, indicating that the four Pots will now control different parameters.
 
 ### Preset "F" -- Glacial _-- click on the image below to play the video_
 [![Thumb for Preset "F" demo](https://img.youtube.com/vi/Ehx3G3c8V5c/0.jpg)](https://www.youtube.com/watch?v=Ehx3G3c8V5c)  
