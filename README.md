@@ -30,3 +30,18 @@ For those who want to learn more, the documentation teaches the basics of Digita
 The SEC-T Synth Badge kit is fully Open Hardware, with a CC BY-SA 4.0 license.
 
 ![Open Hardware logo](https://github.com/user-attachments/assets/ffe5899f-a1be-437b-99b8-e0a93b4a2112)
+
+## Demo Videos
+
+The Synth Badge comes pre-programmed with a synth called Quadrant.  
+Quadrant is somewhat like a looper.  Every time you play a note it goes into the loop.  You can control the speed of the loop, and you can also make the sound warp (detune) every time through the loop.  
+There is the default sound for Quadrant, plus 4 presets -- all 5 of these have very different sounds!  
+In addition to changing the loop speed and changing the warp-factor, there are many parameters that you can play with, some of which change the sounds in subtle ways, others which change the sounds a lot.  
+
+These demo videos give you a very small taste of the sounds Quadrant can make. 
+
+___NOTE__:  The demo videos use the prototype of the SEC-T 0x10sion Music Synthesizer Badge kit._  
+In particular, the two red buttons are reversed (left and right).  
+
+### Preset "F" -- Glacial _-- click on the image below to play the video_
+[![Thumb for Preset "F" demo](https://img.youtube.com/vi/Ehx3G3c8V5c/0.jpg)](https://www.youtube.com/watch?v=Ehx3G3c8V5c)  
