@@ -55,7 +55,19 @@ __Basic Functionality of Quadrant__
 * The Bottom Pot controls the speed of the loop
 * Pot A controls tremelo speed
 * Pot B controls tremelo depth
-* Press-and-hold on the left and right red buttons will make the Red and Blue LEDs light or blink, indicating that the four Pots will now control different parameters.
+* Press-and-hold on the left and right red buttons will make the Red and Blue LEDs light or blink, indicating that the four Pots will now control different parameters.  
+
+### Default Patch -- ToneJack _-- click on the image below to play the video_
+[![Thumb for Default Patch demo](https://img.youtube.com/vi/aWEghYsvORw/0.jpg)](https://www.youtube.com/watch?v=aWEghYsvORw)  
+
+### Preset "C" -- Scaffold _-- click on the image below to play the video_
+[![Thumb for Preset "C" demo](https://img.youtube.com/vi/vg959F6WOIo/0.jpg)](https://www.youtube.com/watch?v=vg959F6WOIo)  
+
+### Preset "D" -- Farsy _-- click on the image below to play the video_
+[![Thumb for Preset "D" demo](https://img.youtube.com/vi/kQ33xrg7Zvw/0.jpg)](https://www.youtube.com/watch?v=kQ33xrg7Zvw)  
+
+### Preset "E" -- Teleprompt _-- click on the image below to play the video_
+[![Thumb for Preset "E" demo](https://img.youtube.com/vi/aHm4yFb8vfQ/0.jpg)](https://www.youtube.com/watch?v=aHm4yFb8vfQ)  
 
 ### Preset "F" -- Glacial _-- click on the image below to play the video_
 [![Thumb for Preset "F" demo](https://img.youtube.com/vi/Ehx3G3c8V5c/0.jpg)](https://www.youtube.com/watch?v=Ehx3G3c8V5c)  
