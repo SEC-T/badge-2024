@@ -51,6 +51,8 @@ __Basic Functionality of Quadrant__
   * The next touch-key is "D" -- Farsy
   * "E" -- Teleprompt
   * "F" -- Glacial
+  * "G" -- Blur
+* Tap the Reset button to get the Default Patch
 * The Top Pot controls the Warp-factor
 * The Bottom Pot controls the speed of the loop
 * Pot A controls tremelo speed
