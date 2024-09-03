@@ -57,8 +57,8 @@ __Basic Functionality of Quadrant__
 * Pot B controls tremelo depth
 * Press-and-hold on the left and right red buttons will make the Red and Blue LEDs light or blink, indicating that the four Pots will now control different parameters.  
 
-### Default Patch -- ToneJack _-- click on the image below to play the video_
-[![Thumb for Default Patch demo](https://img.youtube.com/vi/aWEghYsvORw/0.jpg)](https://www.youtube.com/watch?v=aWEghYsvORw)  
+### Default Patch _-- click on the image below to play the video_
+[![Thumb for Default Patch demo](https://img.youtube.com/vi/8XAPtq4mnFQ/0.jpg)](https://www.youtube.com/watch?v=8XAPtq4mnFQ)  
 
 ### Preset "C" -- Scaffold _-- click on the image below to play the video_
 [![Thumb for Preset "C" demo](https://img.youtube.com/vi/vg959F6WOIo/0.jpg)](https://www.youtube.com/watch?v=vg959F6WOIo)  
@@ -71,3 +71,6 @@ __Basic Functionality of Quadrant__
 
 ### Preset "F" -- Glacial _-- click on the image below to play the video_
 [![Thumb for Preset "F" demo](https://img.youtube.com/vi/Ehx3G3c8V5c/0.jpg)](https://www.youtube.com/watch?v=Ehx3G3c8V5c)  
+
+### Preset "G" -- Blur _-- click on the image below to play the video_
+[![Thumb for Preset "G" demo](https://img.youtube.com/vi/jeHlcZ8XYc8/0.jpg)](https://www.youtube.com/watch?v=jeHlcZ8XYc8)  
