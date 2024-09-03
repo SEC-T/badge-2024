@@ -1,0 +1,20 @@
+Versions:
+
+   1.74sect added control for Neopixel LEDs, changed for 4 pots and only 9 touch-keys
+   1.74c no need to explicitly clear flags.RSTMUTE
+   1.74b add host/host.ini with pot labels
+         add Stock.atp
+   1.74a bck.bat copies host subdirectory and contents
+         add host/preset .atp files for all presets
+   1.73  use embedded U/I frames 
+         syncs with library 1.16
+   1.72  bugfix: upper bound condition in LED iteration corrected to "< NUMLEDs" from "<= NumLEDs"
+         [31722] _STNDLONE_ lib 1.15 Build 1.6.6
+   1.71  newOsc() returns NULL (instead of new Osc())
+   1.70  nix BUILD_166 conditional compilation sections
+   1.69  add FRAME21 pots to control lead 1 detune and transpose
+         [31742] _STNDLONE_ BUILD_166
+   1.68  edit presets/macros to use byte values <= 128 when setting LFO depths 
+         syncs with library 1.13
+         [31684] _STNDLONE_ BUILD_166
+   1.67  === FIRST PUBLISHED VERSION ===
