@@ -30,7 +30,22 @@ For those who want to learn more, the documentation teaches the basics of Digita
 The SEC-T Synth Badge kit is fully Open Hardware, with a CC BY-SA 4.0 license.
 
 ![Open Hardware logo](https://github.com/user-attachments/assets/ffe5899f-a1be-437b-99b8-e0a93b4a2112)
+  
+  
+  
+---
+## Assembly Instructions (with re-programming how-to)
 
+_Click on the image below to open a PDF file with detailed instructions on how to assemble your SEC-T 0x10sion Music Synthesizer Badge (which also includes a how-to for re-programming your Synth Badge with a new Arduino sketch):_  
+  
+### Part 1 of 2 parts:
+<a href="https://github.com/user-attachments/files/16896373/SEC-T_0x10sion_badge_assembly_part_1of2.pdf"><img src="https://github.com/user-attachments/assets/f0d42357-683e-4664-b6a4-c0766932c63d" align="center" width="400"></a>  
+  
+### Part 2 of 2 parts:
+<a href="https://github.com/user-attachments/files/16896082/SEC-T_0x10sion_badge_assembly_part_2of2.pdf"><img src="https://github.com/user-attachments/assets/e167f560-7fb3-4250-949e-37c5ca6ce853" align="center" width="400"></a>  
+  
+  
+---
 ## Demo Videos
 
 The Synth Badge comes pre-programmed with a synth called __Quadrant__.  
