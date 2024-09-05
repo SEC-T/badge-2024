@@ -420,7 +420,7 @@
 
 #include "ArduTouch.h"
 
-about_program( Quadrant, 1.74c )
+about_program( Quadrant, 1.74sect )
 
 // If you've got your hacker shoes on and want to alter this sketch, uncommenting
 // the following line will help you move between __FULLHOST__ and __STNDLONE__
