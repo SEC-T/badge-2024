@@ -3,28 +3,28 @@
 //
 //  A partly echoing, partly arpeggiating, possibly warped synth.
 //
-//  To get the most out of Quadrant be sure to read these header comments 
-//  first. 
+//  To get the most out of Quadrant be sure to read these header comments
+//  first.
 //
 //  Target:   SEC-T 0x10sion Music Synthesizer Badge kit v0.2
 //
 //  This file is modified from the Quadrant.ino synth, which was created for the ArduTouch music synthesizer kit.
-// 
+//
 //  ---------------------------------------------------------------------------
 //
 //           ==== Audio/Control Flow Diagram for the Quadrant Synth ====
 //
 //
-//                ------------  
+//                ------------
 //                |  Tropes  | --------.
 //                ------------         |
-//                                     |    
-//                                     v    
+//                                     |
+//                                     v
 //                              ----------------
 //               .----------->  |   Echotron   |
 //               |              ----------------
 //               |                  |     |
-//               |------------------|-----|------------------. 
+//               |------------------|-----|------------------.
 //               |                  |     |                  |
 //               |                  v     v                  v
 //          ------------        ---------------        ------------
@@ -36,28 +36,28 @@
 //
 //                               [ Audio out ]
 //
-//  
+//
 //  Lead 0 is duplicated in the opposite audio channel by Lead 1 (which may be
-//  transposed and/or detuned from Lead 0). The note information for Lead 0 is 
-//  also fed into the Echotron. At the same time, a "trope" (an arpeggiation 
-//  pattern) can be applied to the echoed note. The output from the Echotron is 
-//  internally panned in stereo and then fed into a mixer along with the audio 
+//  transposed and/or detuned from Lead 0). The note information for Lead 0 is
+//  also fed into the Echotron. At the same time, a "trope" (an arpeggiation
+//  pattern) can be applied to the echoed note. The output from the Echotron is
+//  internally panned in stereo and then fed into a mixer along with the audio
 //  output from Lead 0 and Lead 1.
 //
 //  ---------------------------------------------------------------------------
 //
 //                         ====  The Echotron Unit ====
 //
-//  The Echotron is a stereo synthesizer in its own right. 
+//  The Echotron is a stereo synthesizer in its own right.
 //
 //  At the heart of the Echotron is a carousel of "slots", each of which holds
 //  an instance of an echoing note:
 //
 //       ---------------------------------------
 //       |                                     |  <--- WARP FACTOR
-//       |            Note Carousel            |  
+//       |            Note Carousel            |
 //       |                                     |  <--- DELAY TIME
-//       |  Slot 0 < Slot 1 < Slot 2 < Slot 3  |  
+//       |  Slot 0 < Slot 1 < Slot 2 < Slot 3  |
 //       |                                     |  <--- FEEDBACK
 //       ---------------------------------------
 //             |
@@ -66,20 +66,20 @@
 //          note out
 //
 //  The carousel is constantly "revolving", outputting the note held in the
-//  current slot (the left-most slot in the above diagram), then shifting 
-//  the slots. 
+//  current slot (the left-most slot in the above diagram), then shifting
+//  the slots.
 //
-//  The speed at which the carousel revolves is controlled by the DELAY TIME. 
+//  The speed at which the carousel revolves is controlled by the DELAY TIME.
 //
 //  Each time a note echoes its volume will decrease by an amount controlled
-//  by the FEEDBACK setting. If FEEDBACk is set to its highest value (255) 
+//  by the FEEDBACK setting. If FEEDBACk is set to its highest value (255)
 //  then the note will echo forever, or until all the slots in the carousel
-//  have been used up, and a new incoming note "overwrites" it. 
+//  have been used up, and a new incoming note "overwrites" it.
 //
-//  Each time a note echoes its pitch can be raised or lowered by the 
+//  Each time a note echoes its pitch can be raised or lowered by the
 //  current WARP FACTOR.
 //
-//  The number of slots in the carousel is configurable and can be set 
+//  The number of slots in the carousel is configurable and can be set
 //  interactively via the Parameter Menu (see below) to between 1 and 4.
 //
 //                            ----- Tropes ------
@@ -92,17 +92,17 @@
 //                           ----- Note HOLD ------
 //
 //  You can instruct the Echotron to HOLD the next note played (see the
-//  Parameter Menu below). When a note is on HOLD it will not decrease in 
-//  volume as it echoes, and it will not be overwritten by incoming notes 
+//  Parameter Menu below). When a note is on HOLD it will not decrease in
+//  volume as it echoes, and it will not be overwritten by incoming notes
 //  when the carousel is full. This is a very useful feature for setting
-//  up a constant bass pulse and jamming over it. Better yet, if a trope is 
-//  active when you hold the note, then you can set up a whole bass line or 
+//  up a constant bass pulse and jamming over it. Better yet, if a trope is
+//  active when you hold the note, then you can set up a whole bass line or
 //  texture to be played over. And you can hold more than one note :)
 //
 //                         ----- SAMPLE & HOLD ------
 //
-//  You can globally freeze whatever sound loop the Echotron is producing by 
-//  enabling SAMPLE & HOLD (toggled via the Parameter Menu, see below). Then 
+//  You can globally freeze whatever sound loop the Echotron is producing by
+//  enabling SAMPLE & HOLD (toggled via the Parameter Menu, see below). Then
 //  you can jam over it freely.
 //
 //                         -----   ISO-TEMPO  -------
@@ -110,31 +110,32 @@
 //  This feature allows the Echotron to maintain a constant tempo, regardless
 //  of the number of notes in the carousel. So if there are 4 notes currently
 //  echoing in the carousel and ISO-TEMPO is on, then the delay time will be
-//  1/4 of what it would be if there were only 1 note in the carousel. The 
+//  1/4 of what it would be if there were only 1 note in the carousel. The
 //  "Telepromt" and "Frara Jaqua" presets use ISO-TEMPO. You can toggle
-//  ISO_TEMPO via the Parameter Menu (see below).
+//  ISO_TEMPO via the Parameter Menu (see below). (NOTE: The "Frara Jaqua"
+//  preset is only available on the ArduTouch board.)
 //
 //                          -----   ENVELOPE  ------
 //
 //  A master envelope dynamically controls the amplitude of the notes produced by
 //  the Echotron. This envelope is a traditional ADSR (Attack/Decay/Sustain/Release)
-//  but with a twist: a sustain time parameter is added. When the envelope for an 
-//  echoing note reaches the sustain stage it will automatically release after the 
+//  but with a twist: a sustain time parameter is added. When the envelope for an
+//  echoing note reaches the sustain stage it will automatically release after the
 //  amount of time specified by the sustain time parameter. The various stages of
 //  the master envelope can be controlled via the pots (see below).
 //
 //                        -----   PULSE WIDTH  ------
 //
 //  The notes produced by the Echotron use square wave oscillators. The PULSE WIDTH
-//  of these oscillators can be modified via a pot (see below). The pulse width 
-//  controls the ratio between the positive and negative edges of the square wave 
+//  of these oscillators can be modified via a pot (see below). The pulse width
+//  controls the ratio between the positive and negative edges of the square wave
 //  and can radically alter the timbre of the tones.
 //
 //                          -----  AUTO-WAH  ------
 //
 //  The Echotron has a pair of internal autowahs (oscillating low-pass filters)
 //  which are applied to the note output before it is panned. Three parameters
-//  control the autowah behaviour: CUTOFF frequency, oscillation FREQ, and 
+//  control the autowah behaviour: CUTOFF frequency, oscillation FREQ, and
 //  oscillation DEPTH. All of these can be modified via the pots (see below).
 //
 //                        -----  PAN CONTROL  ------
@@ -151,7 +152,7 @@
 //
 //                                     |
 //                     [HOLD]    notes | in        [SAMPLE & HOLD]
-//                           \         |             
+//                           \         |
 //                            \        v
 //                             -----------------   < WARP >
 //             Trope in --->   | Note Carousel |   < DELAY >      [ISO-TEMPO]
@@ -167,7 +168,7 @@
 //                             |               |
 //                             v               v
 //                       -----------------------------
-//                       |  <---- Pan Control ---->  |  
+//                       |  <---- Pan Control ---->  |
 //                       |      <FREQ>  <DEPTH>      |
 //                       -----------------------------
 //                           |     audio out     |
@@ -180,7 +181,7 @@
 //
 //  ---------------------------------------------------------------------------
 //
-//  The Quadrant keyboard is a mono-touch instrument: you can play one note at 
+//  The Quadrant keyboard is a mono-touch instrument: you can play one note at
 //  a time.
 //
 //  To raise the keyboard by an octave, tap the right button once.
@@ -195,9 +196,9 @@
 //  The pots can be used to control 18 different parameters.
 //
 //  The ArduTouch board has two pots.
-//     You can choose two parameters to control with the left and right pots.
+//     You can choose two parameters to control with the left and right buttons.
 //  The SEC-T Synth Badge board has four pots.
-//     You can choose four paramaters to control with the left and right pots.
+//     You can choose four paramaters to control with the left and right buttons.
 //
 //  By pressing (not tapping) the left and right buttons you can change which
 //     parameters the pots control. Each time a button is pressed, its
@@ -243,7 +244,7 @@
 //       OFF         OFF          echo WARP             echo DELAY time           autowah FREQ             autowah DEPTH
 //        ON         OFF        echo FEEDBACK          lead/echo BALANCE          autowah CUTOFF          echo PULSE WIDTH
 //     BLINK         OFF        panning FREQ             panning DEPTH             lead 1 DETUNE**         lead 1 TRANSPOSE***
-//       OFF          ON        autowah FREQ             autowah DEPTH           envelope ATTACK*          envelope DECAY* 
+//       OFF          ON        autowah FREQ             autowah DEPTH           envelope ATTACK*          envelope DECAY*
 //        ON          ON        autowah CUTOFF          echo PULSE WIDTH         envelope SUSTAIN*        envelope RELEASE*
 //     BLINK          ON         lead 1 DETUNE**         lead 1 TRANSPOSE***       echo SUSTIME            lead PORTAMENTO
 //       OFF       BLINK       envelope ATTACK*          envelope DECAY*                --                       --
@@ -270,133 +271,137 @@
 //  You can control additional parameters by using the Parameter Menu.
 //
 //  To access the Parameter Menu double-tap the left button. The LEDs will now
-//  start blinking on and off in alternation: this tells you that the Parameter 
-//  Menu is active. When the Parammeter Menu is active the keys will no longer 
-//  play notes but each key will select and modify a particular parameter as 
+//  start blinking on and off in alternation: this tells you that the Parameter
+//  Menu is active. When the Parameter Menu is active the keys will no longer
+//  play notes but each key will select and modify a particular parameter as
 //  described below. Depending on the parameter, the pot positions may also be
-//  relevant, as described below. The Parameter Menu is active until you press 
-//  a key: then the parameter associated with that key is modified, and the 
-//  Parameter Menu is automatically exited (restoring the prior user interface 
-//  state).
+//  relevant, as described below. The Parameter Menu is active until you press
+//  a key on the touch-keyboard: then the parameter associated with that key is
+//  modified, and the Parameter Menu is automatically exited (restoring the
+//  prior user interface state).
 //
 //  You can exit the Parameter Menu without modifying any parameters by double-
 //  tapping the left button a second time.
-//  
+//
 //  The list below describes what actions are taken when a key is pressed:
 //
-//      Key   Action   
+//      Key   Action
 //      ---   -----------------------------------------------------------
 //
 //       C    toggle Sample-and-Hold on/off
 //       C#   turn Sample-and-Hold off, and unhold all held notes
 //       D    hold next note played
 //       D#   [ reserved ]
-//       E    toggle lead voices on/off 
+//       E    toggle lead voices on/off
 //       F    set # of slots in carousel based on pot 0 position *
-//       F#   toggle isoTempo or/off 
+//       F#   toggle isoTempo or/off
 //       G    select trope based on pot 1 position **
-//       G#   [ reserved ] 
-//       A    ADSR pots control envelopes of both lead and echo voices
-//       A#   ADSR pots control envelopes of lead voices only 
-//       B    ADSR pots control envelopes of echo voices only
+//       G#   [ reserved ]
+//       A    ADSR pots control envelopes of both lead and echo voices ***
+//       A#   ADSR pots control envelopes of lead voices only ***
+//       B    ADSR pots control envelopes of echo voices only ***
 //
-//   * turn pot 0 to desired position (all the way left = 1, all the way right = 4) 
-//     then press F 
+//    * turn pot 0 to desired position (all the way left = 1, all the way right = 4)
+//      then press F
 //
-//  ** turn pot 1 to desired position (all the way left = "no trope" ) then press G 
+//   ** turn pot 1 to desired position (all the way left = "no trope" ) then press G
+//
+//  *** A, A#, and B are only available with ArduTouch board
 //
 //  ---------------------------------------------------------------------------
-//                         Guide to Quadrant's Presets 
+//                         Guide to Quadrant's Presets
 //  ---------------------------------------------------------------------------
 //
-//   Load presets by double-tapping the right button and then pressing any 
-//   "white" key. 
+//   The default patch is active when powered on, and after Tapping the Reset Button.
+//
+//   Load presets by double-tapping the right button and then pressing any
+//   "white" key.
 //
 //   The presets are as follows:
 //
-//      Key   Name        Performance Notes   
+//      Key   Name        Performance Notes
 //      ---   ----        ----------------------------------------------------
 //       C    Scaffold    lead voices off (and should stay off)
-//       D    Farsy       
-//       E    Teleprompt  lead voices off (turn them on once 2 slots are playing)  
-//       F    Glacial     play very slowly 
-//       G    Blur      
-//       A    ToneJack    ** 
-//       B    FraraJaqua  lead voices off (turn them on once 4 slots are playing) ** 
+//       D    Farsy
+//       E    Teleprompt  lead voices off (turn them on once 2 slots are playing)
+//       F    Glacial     play very slowly
+//       G    Blur
+//       A    ToneJack    **
+//       B    FraraJaqua  lead voices off (turn them on once 4 slots are playing) **
 //
 //       ** FraraJaqua and ToneJack are only available with ArduTouch board
 //
 //  ---------------------------------------------------------------------------
-//                           About Quadrant's Tuning 
+//                           About Quadrant's Tuning
 //  ---------------------------------------------------------------------------
 //
-//   When you start playing notes on the keyboard you will probably notice that 
-//   the 'C' key plays an 'F'. And if you have a really good ear you may also 
+//   When you start playing notes on the keyboard you will probably notice that
+//   the 'C' key plays an 'F'. And if you have a really good ear you may also
 //   notice that the interval between C# and G# is not exactly a 5th.
 //
 //   Why is this?
 //
 //   To explain the 2nd observation first, Quadrant uses Harmonic Tuning (also
 //   known as Just Temperament or "Helmholtz's scale") instead of the usual
-//   Equal Temperament (which is the system default). 
+//   Equal Temperament (which is the system default).
 //
 //   Harmonic Tuning is actually more "natural" than Equal Temperament (which
 //   was created as a compromise so that keyboard instruments could play in
-//   all keys). In Harmonic Tuning the relative frequencies of all notes 
+//   all keys). In Harmonic Tuning the relative frequencies of all notes
 //   compared to the tonic ('C' in our case) are rational numbers:
 //
-//              Unison         1/1  
-//              Minor Second  25/24  
-//              Major Second   9/8  
-//              Minor Third    6/5  
-//              Major Third    5/4   
-//              Fourth         4/3  
-//              Diminish 5th  45/32  
-//              Fifth          3/2  
-//              Minor Sixth    8/5  
-//              Major Sixth    5/3  
-//              Minor Seventh  9/5  
-//              Major Seventh 15/8  
-//              Octave         2/1  
+//              Unison         1/1
+//              Minor Second  25/24
+//              Major Second   9/8
+//              Minor Third    6/5
+//              Major Third    5/4
+//              Fourth         4/3
+//              Diminish 5th  45/32
+//              Fifth          3/2
+//              Minor Sixth    8/5
+//              Major Sixth    5/3
+//              Minor Seventh  9/5
+//              Major Seventh 15/8
+//              Octave         2/1
 //
-//   The Echotron uses quantum square wave oscillators which can only be set to 
-//   frequencies which have integral wavelengths. The frequencies produced by 
-//   these oscillators conform more closely to a scale in Harmonic Tuning than 
+//   The Echotron uses quantum square wave oscillators which can only be set to
+//   frequencies which have integral wavelengths. The frequencies produced by
+//   these oscillators conform more closely to a scale in Harmonic Tuning than
 //   one in Equal Temperament.
 //
 //   But why does the 'C' key play an 'F'?
 //
 //   The short answer is that on the ArduTouch, whose audio rate is ~15.6 kHz,
 //   'F' (in octave 1) has a period of 360 samples. 360 is a number favored by the
-//   ancients because it is divisible by a large number of integers: 1, 2, 3, 4, 
+//   ancients because it is divisible by a large number of integers: 1, 2, 3, 4,
 //   5, 6, 8, 9, 10, 12, 15, 18, 20, 24, etc. It so happens that by using a tonic
 //   frequency whose period is 360, we are able to use quantum oscillators to
-//   closely approximate the Harmonic Tuning scale over several octaves. Low 'F', 
+//   closely approximate the Harmonic Tuning scale over several octaves. Low 'F',
 //   so to speak, is the natural tonic frequency of the ArduTouch.*
 //
-//   Since Quadrant's tuning is only an approximation to an 'F' Harmonic tuning, 
-//   certain musical scales (such as E Major, F# Major on the ArduTouch keyboard) 
+//   Since Quadrant's tuning is only an approximation to an 'F' Harmonic tuning,
+//   certain musical scales (such as E Major, F# Major on the ArduTouch keyboard)
 //   will sound a bit sour. C Major / D Minor work best.
-//   
-//   *actually, on the ArduTouch a waveform with a period of 360 samples generates 
+//
+//   *actually, on the ArduTouch a waveform with a period of 360 samples generates
 //   a tone with a frequency of 43.578 Hz. In the equal temperament scale, 'F' in
-//   octave 1 has a frequency of 43.654 Hz.  
+//   octave 1 has a frequency of 43.654 Hz.
 //
 //  ---------------------------------------------------------------------------
-// 
+//
 //  Copyright (C) 2024, Mitch Altman
 //  Copyright (C) 2019, Cornfield Electronics, Inc.
-// 
-//  This work is licensed under the Creative Commons Attribution-ShareAlike 3.0 
+//
+//  This work is licensed under the Creative Commons Attribution-ShareAlike 3.0
 //  Unported License.
-// 
+//
 //  To view a copy of this license, visit
 //  http://creativecommons.org/licenses/by-sa/3.0/
-// 
+//
 //  Created by Bill Alessi & Mitch Altman.
 //
 //  Slightly modified for SEC-T 0x10sion Music Synthesizer Badge kit by Mitch Altman
-// 
+//
 //  ---------------------------------------------------------------------------/*
 
 //  ---------------------------------------------------------------------------
@@ -413,9 +418,9 @@
 //  ---------------------------------------------------------------------------
 
 
-#include "ArduTouch.h"                       
+#include "ArduTouch.h"
 
-about_program( Quadrant, 1.74c )       
+about_program( Quadrant, 1.74c )
 
 // If you've got your hacker shoes on and want to alter this sketch, uncommenting
 // the following line will help you move between __FULLHOST__ and __STNDLONE__
@@ -431,17 +436,17 @@ about_program( Quadrant, 1.74c )
 #endif
 #endif
 
-// AUDIT_LEAD is for developers who want to listen to the full lead voices while 
-// running in the __FULLHOST__ model (otherwise, only sine waves are used, because 
-// there is not enough ROM to fit the complex wavetables, nested oscillators and 
+// AUDIT_LEAD is for developers who want to listen to the full lead voices while
+// running in the __FULLHOST__ model (otherwise, only sine waves are used, because
+// there is not enough ROM to fit the complex wavetables, nested oscillators and
 // console code at the same time). When AUDIT_LEAD is defined and the runtime model
-// is __FULLHOST__ the Echotron unit is replaced by a null-audio StereoInstrument 
+// is __FULLHOST__ the Echotron unit is replaced by a null-audio StereoInstrument
 // (again, not enough space).
 
 // #define AUDIT_LEAD                      // for developers only!
 
 #ifdef __FULLHOST__
-   #ifndef AUDIT_LEAD 
+   #ifndef AUDIT_LEAD
       #define AUDIT_ECHO
    #endif
 #else
@@ -489,7 +494,7 @@ about_program( Quadrant, 1.74c )
  *
  ******************************************************************************/
 
-define_preset( Empty,      "" )               
+define_preset( Empty,      "" )
 
 define_preset( Blur,       "!0g25\\`"
                            #ifdef AUDIT_LEAD
@@ -497,9 +502,9 @@ define_preset( Blur,       "!0g25\\`"
                            #endif
                            "b200\\"
                            #ifdef AUDIT_ECHO
-                           "Ew1\\f220\\d.1\\n2\\Ma20\\t50\\``" 
+                           "Ew1\\f220\\d.1\\n2\\Ma20\\t50\\``"
                            #endif
-                           )               
+                           )
 
 define_preset( Farsy,      "!Ma60\\s200\\r180\\`1x5\\`"
                            #ifdef AUDIT_ECHO
@@ -507,7 +512,7 @@ define_preset( Farsy,      "!Ma60\\s200\\r180\\`1x5\\`"
                            "0P31\\ac123\\lf3.2\\d89\\```"
                            "1P30\\ac130\\lf2.4\\d83\\````"
                            #endif
-                           "s1\\0g36\\`1g38\\`" )               
+                           "s1\\0g36\\`1g38\\`" )
 
 define_preset( Glacial,    "!b50\\Ma160\\d200\\s170\\r210\\`"
                            #ifdef AUDIT_ECHO
@@ -523,8 +528,8 @@ define_preset( Scaffold,   "!0.`1.`"
                            "Et2\\d.037\\f255\\w4\\"
                            "Pf5\\d128\\``"
                            #endif
-                           "" )  
-                                        
+                           "" )
+
 define_preset( ToneJack,   "!"
                            "!b225\\0v80\\x-15\\Ag<g40\\```"
                            #ifdef AUDIT_LEAD
@@ -533,8 +538,8 @@ define_preset( ToneJack,   "!"
                            #ifdef AUDIT_ECHO
                            "Ed.2\\f255\\w30\\"
                            #endif
-                           "" )  
-                                        
+                           "" )
+
 define_preset( FraraJaqua, "!0.v120\\x-36\\ed0\\r255\\`Agg40\\```"
                            "X1.ed50\\s200\\r145\\`O<r.236\\`Agg1.5\\```"
                            "b130\\"
@@ -542,21 +547,21 @@ define_preset( FraraJaqua, "!0.v120\\x-36\\ed0\\r255\\`Agg40\\```"
                            "Ed.45\\"
                            "0P96\\ac180\\lf6\\d77\\```"
                            "1P32\\alf1.65\\d109\\```"
-                           "it\\t9\\f255\\Ma13\\d56\\s70\\t25\\``" 
+                           "it\\t9\\f255\\Ma13\\d56\\s70\\t25\\``"
                            #endif
-                           )               
+                           )
 
 define_preset( Teleprompt, "!0.v100\\x-12\\ea1\\d1\\s52\\r240\\`Ag<g12\\```"
                            "X1.v160\\x-12\\ea0\\d10\\s60\\r220\\`d32\\O<r2\\m116\\``"
                            "b220\\"
                            #ifdef AUDIT_ECHO
                            "Eit\\t8\\n2\\d.171\\f255\\0P96\\`"
-                           "Md7\\s36\\r36\\t5\\``" 
+                           "Md7\\s36\\r36\\t5\\``"
                            #endif
                            )
 
 
-begin_bank( myPresets )                   
+begin_bank( myPresets )
 
    _preset( Scaffold )                    // C
    _preset( Empty )                       // C#
@@ -574,13 +579,13 @@ begin_bank( myPresets )
 end_bank()
 
 /******************************************************************************
- *       
- *                               Tropes 
  *
- *  Tropes are preset arpeggiation patterns in ROM. 
+ *                               Tropes
  *
- *  Each element in a trope array specifies a semi-tone offset to be applied to 
- *  subsequent echoes of a note. 
+ *  Tropes are preset arpeggiation patterns in ROM.
+ *
+ *  Each element in a trope array specifies a semi-tone offset to be applied to
+ *  subsequent echoes of a note.
  *
  *  The end of a trope is signified by an offset of EOT.
  *
@@ -621,17 +626,17 @@ PROGMEM const char* const tropes[] =   // an array of ptrs to preset tropes
    &trope05[0],
    &trope06[0],
    &trope07[0],
-   &trope08[0], 
+   &trope08[0],
    &trope09[0]
 } ;
 
 /*----------------------------------------------------------------------------*
  *                           TweekedHarmonicTuning
- *----------------------------------------------------------------------------*/      
+ *----------------------------------------------------------------------------*/
 
 // This tuning compensates for a particularly out-of-tune 'A' in octave 3
-// for quantum oscillators. By using this tuning, oscillators with non-quantum 
-// periods (such as those used by the lead voices) will not be noticably out of 
+// for quantum oscillators. By using this tuning, oscillators with non-quantum
+// periods (such as those used by the lead voices) will not be noticably out of
 // tune with their quantum counterparts.
 
 class TweekedHarmonicTuning : public HarmonicTuning
@@ -657,11 +662,11 @@ class TweekedHarmonicTuning : public HarmonicTuning
 
 /*----------------------------------------------------------------------------*
  *                               NotePeriods
- *----------------------------------------------------------------------------*/      
+ *----------------------------------------------------------------------------*/
 
 // Thus is a lookup table of quantum periods for notes
 
-const word NotePeriods[] PROGMEM = {  
+const word NotePeriods[] PROGMEM = {
 
    // octave 0
 
@@ -672,11 +677,11 @@ const word NotePeriods[] PROGMEM = {
    180, 173, 160, 150, 144, 135, 128, 120, 113, 107, 100, 96,
 
    // octave 2
-   
+
    90, 86, 80, 75, 72, 67, 64, 60, 56, 54, 50, 48,
 
    // octave 3
-   
+
    45, 43, 40, 38, 36, 34, 32, 30, 28, 27, 25, 24
 
 } ;
@@ -687,24 +692,24 @@ word notePeriod( byte noteNum )           // given a note #, return its period
 
    while ( noteNum >= NUMPERIODS )        // insure note falls within table
       noteNum -= 12;
-      
+
    // calc address of period in ROM
 
-   byte idx    = noteNum << 1;            
-   word elePtr = (word )&NotePeriods[0] + idx;    
+   byte idx    = noteNum << 1;
+   word elePtr = (word )&NotePeriods[0] + idx;
 
    return pgm_read_word_near( elePtr );
 }
 
 /******************************************************************************
  *
- *                              OscStack 
+ *                              OscStack
  *
  ******************************************************************************/
 
 #define NoNote 255                     // note # for no note
 
-#define NUMOSC 2                       // # of oscillators in OscStack 
+#define NUMOSC 2                       // # of oscillators in OscStack
 
 #define MAXAMP 63                      // max oscillator amplitude
 #define MINAMP 18                      // min oscillator amplitude
@@ -712,7 +717,7 @@ word notePeriod( byte noteNum )           // given a note #, return its period
 #define MAXPERIOD 360                  // max allowable period for an osc
 #define MINPERIOD 4                    // min allowable period for an osc
 
-class OscStack : public QuantumOsc 
+class OscStack : public QuantumOsc
 {
    typedef QuantumOsc super;           // superclass is QuantumOsc
 
@@ -722,7 +727,7 @@ class OscStack : public QuantumOsc
 
    byte amp[NUMOSC];                   // amplitude of oscillators
 
-   byte edgIdx[NUMOSC];                // index into current edge 
+   byte edgIdx[NUMOSC];                // index into current edge
    byte edgeDC[NUMOSC];                // downcounter to next edge transition
 
    byte edgLen[NUMOSC][2];             // edge lengths
@@ -749,7 +754,7 @@ class OscStack : public QuantumOsc
 
    void calcEdges( byte t, word period )
    {
-      Word posSteps; 
+      Word posSteps;
       Word negSteps;
 
       if ( period <= 1 )
@@ -761,7 +766,7 @@ class OscStack : public QuantumOsc
       posSteps.val *= pW;
       posSteps.val  = posSteps._.msb;
 
-      if ( posSteps.val == 0 ) 
+      if ( posSteps.val == 0 )
          posSteps.val = 1;
 
       negSteps.val = period - posSteps.val;
@@ -775,7 +780,7 @@ class OscStack : public QuantumOsc
       setSteps( t, posSteps._.lsb, negSteps._.lsb );
    }
 
-   boolean charEv( char code )    
+   boolean charEv( char code )
    {
       switch ( code )
       {
@@ -792,7 +797,7 @@ class OscStack : public QuantumOsc
             console.pushMode( autowah );
             break;
 
-         case 'n':                     // set note  
+         case 'n':                     // set note
          {
             byte inp;
             if ( console.getByte( CONSTR("note"), &inp ) )
@@ -800,7 +805,7 @@ class OscStack : public QuantumOsc
             break;
          }
 
-         case 'p':                     // set phase  
+         case 'p':                     // set phase
          {
             int inp;
             if ( console.getInt( CONSTR("phase"), &inp ) && inp >= 0 )
@@ -815,7 +820,7 @@ class OscStack : public QuantumOsc
                setPW( inp );
             break;
          }
-  
+
          #endif
 
          #ifdef CONSOLE_OUTPUT
@@ -832,7 +837,7 @@ class OscStack : public QuantumOsc
 
          case '!':                     // perform a reset
 
-            super::charEv( code );  
+            super::charEv( code );
 
             tracking  = false;
             pW        = 128;
@@ -855,7 +860,7 @@ class OscStack : public QuantumOsc
 
          default:
 
-            return super::charEv( code );  
+            return super::charEv( code );
 
       }
    }
@@ -909,7 +914,7 @@ class OscStack : public QuantumOsc
 
    void output( char *buf )
    {
-      char *bufstart = buf;            // save buffer addr 
+      char *bufstart = buf;            // save buffer addr
       byte icnt = audioBufSz;          // write this many ticks of output
 
       while ( icnt-- )                 // for each byte in the buffer
@@ -956,7 +961,7 @@ class OscStack : public QuantumOsc
          period = MINPERIOD;
 
       // compute edge lengths
-      
+
       calcEdges( t, period );
 
       /* phase lock with any identical osc */
@@ -965,7 +970,7 @@ class OscStack : public QuantumOsc
       {
          if ( t == i ) continue;
          if ( period != oscPeriod(i) ) continue;
-         
+
          edgIdx[t] = edgIdx[i];
          edgeDC[t] = edgeDC[i];
       }
@@ -1012,7 +1017,7 @@ class OscStack : public QuantumOsc
 
    void setPW( byte x )
    {
-      if ( x < 1 ) 
+      if ( x < 1 )
           x = 1;
       if ( x > 128)
          x = 128;
@@ -1039,19 +1044,19 @@ class OscStack : public QuantumOsc
       pendWarp[oscNum] = warp;
    }
 
-   PROMPT_STR( oscStack ) 
+   PROMPT_STR( oscStack )
 
 } ;
 
 /******************************************************************************
  *
- *                                 Echotron 
+ *                                 Echotron
  *
  ******************************************************************************/
 
-#define MINVOL (word)(((MINAMP*256) / MAXAMP) - 1)  
+#define MINVOL (word)(((MINAMP*256) / MAXAMP) - 1)
 
-struct Slot           // data structure of a carousel slot 
+struct Slot           // data structure of a carousel slot
 {
    byte  note;        // current note to echo
    byte  vol;         // volume of note ( 255 == "1.0" )
@@ -1061,27 +1066,27 @@ struct Slot           // data structure of a carousel slot
    char  idx;         // indexes table (index of current semi-tone offset)
 } ;
 
-#define NUMSLOTS 4    // number of slots in the carousel 
+#define NUMSLOTS 4    // number of slots in the carousel
 
 //                      ---- panControl ----
 //
-// panPos determines the static pan position for Echotron::side[0.1] 
+// panPos determines the static pan position for Echotron::side[0.1]
 //
-//    panPos == 0   means side[0] is panned completely to the left 
+//    panPos == 0   means side[0] is panned completely to the left
 //    panPos == 128 means side[0] is centered in the stereo field
 //    panPos == 255 means side[0] is panned completely to the right
 //
 // The pan position for side[1] is the complement of that for side[0].
 
-byte        panPos;                       // static pan position for voices  
+byte        panPos;                       // static pan position for voices
 PanControl  panControl( &panPos );        // dynamic controller of panPos
 
-class Echotron : public StereoInstrument 
+class Echotron : public StereoInstrument
 {
    typedef StereoInstrument super;        // superclass is StereoInstrument
 
    public:
-                                           
+
    OscStack *side[2];                     // 1 osc stack per side
 
    byte curSide;                          // index of side to route next note to
@@ -1091,19 +1096,19 @@ class Echotron : public StereoInstrument
    // carousel state variables
 
    Slot   carousel[ NUMSLOTS ];           // round of notes to echo
-   byte   maxNotes;                       // max number of notes permitted in carousel 
+   byte   maxNotes;                       // max number of notes permitted in carousel
    byte   numNotes;                       // number of notes currently in carousel
    byte   insSlot;                        // index into carousel for next note insertion
    byte   echoSlot;                       // index into carousel for next note to echo
 
    byte   feedback;                       // feedback amount ( 255 == echo forever )
 
-   double delay;                          // delay time between echoed notes 
+   double delay;                          // delay time between echoed notes
    word   delayRL;                        // # of dynamic updates between echoed notes
-   word   delayDC;                        // # of dynamic updates until next echo 
+   word   delayDC;                        // # of dynamic updates until next echo
 
    bool   isoTempo;                       // delayRL is inversely proportional to numNotes
-   bool   hold;                           // hold the next note in carousel 
+   bool   hold;                           // hold the next note in carousel
    bool   samplehold;                     // sample-and-hold is engaged
 
    char   warp;                           // warp echo this much per trigger
@@ -1124,7 +1129,7 @@ class Echotron : public StereoInstrument
       env.setSlave( 3, side[1]->env[1] );
    }
 
-   boolean charEv( char code )    
+   boolean charEv( char code )
    {
       switch ( code )
       {
@@ -1142,25 +1147,25 @@ class Echotron : public StereoInstrument
             if ( console.getDouble( CONSTR("delay"), &input ) )
                setDelay( input );
             break;
-         }   
+         }
 
          case 'M':                        // push master envelope
 
             console.pushMode( &this->env );
-            break;   
+            break;
 
-         case 'f':                        // set echo feedback 
+         case 'f':                        // set echo feedback
 
             console.getByte( CONSTR("feedback"), &this->feedback );
             break;
 
-         case 'h':                        // hold next noteOn 
+         case 'h':                        // hold next noteOn
 
             hold = true;
             console.newprompt();
             break;
 
-         case 'i':                        // set isoTempo 
+         case 'i':                        // set isoTempo
          {
             bool val;
             if ( console.getBool( CONSTR("isoTempo"), &val ) )
@@ -1174,9 +1179,9 @@ class Echotron : public StereoInstrument
             if ( console.getByte( CONSTR("notes"), &input ) )
                setMaxNotes( input );
             break;
-         }   
+         }
 
-         case 'N':                        // execute a noteOn 
+         case 'N':                        // execute a noteOn
          {
             byte noteNum;
             byte octave;
@@ -1194,18 +1199,18 @@ class Echotron : public StereoInstrument
          }
 
          case 'P':                        // push the panning control
-         
+
             console.pushMode( &panControl );
-            break;   
+            break;
 
          #endif
 
-         case 's':                        // set sample-and-hold 
+         case 's':                        // set sample-and-hold
 
             console.getBool( CONSTR("samphold"), &this->samplehold );
             break;
 
-         case 't':                        // set trope 
+         case 't':                        // set trope
          {
             byte val;
             if ( console.getByte( CONSTR("trope"), &val ) )
@@ -1220,7 +1225,7 @@ class Echotron : public StereoInstrument
             hold = false;
             break;
 
-         case 'w':                        // set warp 
+         case 'w':                        // set warp
          {
             char val;
             if ( console.getSByte( CONSTR("warp"), &val ) )
@@ -1228,7 +1233,7 @@ class Echotron : public StereoInstrument
             break;
          }
 
-         #ifdef CONSOLE_OUTPUT            // compile cases that display to console 
+         #ifdef CONSOLE_OUTPUT            // compile cases that display to console
 
          case chrInfo:
 
@@ -1254,14 +1259,14 @@ class Echotron : public StereoInstrument
 
          case '!':                        // perform a reset
 
-            super::charEv( code );  
+            super::charEv( code );
 
             curSide = 0;
             warp    = 0;
             trope   = 0;
             prevPW  = 0;
 
-            side[0]->reset();          
+            side[0]->reset();
             side[1]->reset();
             side[1]->autowah->lfo.setFreq( .165 );  // override autowah 1 freq
 
@@ -1283,7 +1288,7 @@ class Echotron : public StereoInstrument
             setMaxNotes(4);
 
             feedback = 175;
-            delayDC  = 0;                  
+            delayDC  = 0;
             setDelay( .3 );
             //setDelay( .45 );
 
@@ -1296,14 +1301,14 @@ class Echotron : public StereoInstrument
 
          default:
 
-            return super::charEv( code );  
+            return super::charEv( code );
 
       }
    }
 
    void clearSlot( byte i )
    {
-      if ( i < NUMSLOTS ) 
+      if ( i < NUMSLOTS )
       {
          carousel[i].note  = NoNote;
          carousel[i].idx   = 0;
@@ -1327,19 +1332,19 @@ class Echotron : public StereoInstrument
       if ( --delayDC != 0 ) return;       // delay is on but still counting down
 
       //               ---  it is time for the next echo  ---
-      
+
       delayDC = delayRL;                  // reload delay downcounter
 
       // locate the next bona-fide note in the carousel to be echoed
 
       Word echoVol;                       // register for computing echo volume
       byte echoIdx = echoSlot;            // index of slot to check for an echoing note
-      
-      while ( true )                      // loop through slots 
+
+      while ( true )                      // loop through slots
       {
          if ( carousel[echoIdx].note != NoNote )
          {
-            // if sample-and-hold is engaged, or note in slot is held, 
+            // if sample-and-hold is engaged, or note in slot is held,
             // do not mitigate echo volume level
 
             if ( samplehold || carousel[echoIdx].hold )
@@ -1348,7 +1353,7 @@ class Echotron : public StereoInstrument
                break;
             }
 
-            // compute new echo volume level 
+            // compute new echo volume level
 
             echoVol.val  = feedback;
             echoVol.val += 1;
@@ -1359,7 +1364,7 @@ class Echotron : public StereoInstrument
             if ( echoVol._.msb < MINVOL )
             {
                carousel[echoIdx].note = NoNote;
-               setNumNotes( numNotes-1 );                      
+               setNumNotes( numNotes-1 );
             }
             else
                break;                     // note is bona-fide
@@ -1374,7 +1379,7 @@ class Echotron : public StereoInstrument
 
       carousel[echoIdx].vol = echoVol._.msb;
 
-      // update warp  
+      // update warp
 
       int nextWarp = carousel[echoIdx].warp + warp;
       if ( nextWarp > MAXPERIOD )
@@ -1402,7 +1407,7 @@ class Echotron : public StereoInstrument
             carousel[echoIdx].idx = 1;
          }
          else
-            offset = 0;            
+            offset = 0;
       }
       else                       // bump trope idx (with wrap)
          carousel[echoIdx].idx += 1;
@@ -1413,30 +1418,30 @@ class Echotron : public StereoInstrument
       while ( noteToSend < 0 )   // insure note + offset is positive
          noteToSend += 12;
 
-      // send note to the osc stack 
+      // send note to the osc stack
 
       sendNote( noteToSend, carousel[echoIdx].vol, carousel[echoIdx].warp );
 
       // bump echo slot
 
-      echoSlot = nextSlot( echoIdx );  
+      echoSlot = nextSlot( echoIdx );
    }
 
    bool evHandler( obEvent e )               // event handler
    {
       switch ( e.type() )
-      {     
-         case POT0:                          // set feedback 
+      {
+         case POT0:                          // set feedback
 
             setFeedbackViaPot( e.getPotVal() );
             break;
 
-         case POT1:                          // set delay 
-         
+         case POT1:                          // set delay
+
             setDelayViaPot( e.getPotVal() );
             break;
 
-         default:       
+         default:
 
             return super::evHandler(e);      // pass other events through
       }
@@ -1459,7 +1464,7 @@ class Echotron : public StereoInstrument
       // if there are no free slots (because all contain held notes), return.
 
       byte trySlot  = insSlot;
-      
+
       while ( carousel[trySlot].note != NoNote && carousel[trySlot].hold )
       {
          trySlot = nextSlot( trySlot );
@@ -1470,13 +1475,13 @@ class Echotron : public StereoInstrument
 
       // compute note # from note octave and position and any global transposition
 
-      note.transpose( xpose ); 
+      note.transpose( xpose );
       byte noteNum = note.octave() * 12 + note.position();
 
       // bump note count if insertion is occuring in a free slot
 
       if ( carousel[insSlot].note == NoNote )
-         setNumNotes( numNotes+1 );                      
+         setNumNotes( numNotes+1 );
 
       // insert it into the carousel
 
@@ -1488,7 +1493,7 @@ class Echotron : public StereoInstrument
       carousel[insSlot].idx   = 0;
 
       insSlot = nextSlot( insSlot );      // update insertion slot
-      
+
       if ( numNotes == 1 && delayRL )
          delayDC = 1;
 
@@ -1505,9 +1510,9 @@ class Echotron : public StereoInstrument
             bufL[i] = 0;
             bufR[i] = 0;
          }
-         return;   
+         return;
       }
-      
+
       // output is not muted, proceed normally
 
       side[0]->output( bufL );
@@ -1568,12 +1573,12 @@ class Echotron : public StereoInstrument
       //return &trope00[0];
    }
 
-   void sendNote( byte noteNum, byte noteVol, int warp = 0 )     
+   void sendNote( byte noteNum, byte noteVol, int warp = 0 )
    {
-      side[curSide]->newNote( noteNum, noteVol, warp );  
-      curSide ^= 1;                                
+      side[curSide]->newNote( noteNum, noteVol, warp );
+      curSide ^= 1;
    }
-            
+
    void setDelay( double time )
    {
       if ( time >= 0.0 )
@@ -1588,9 +1593,9 @@ class Echotron : public StereoInstrument
       #define LOG_BUCKET 16            // scale semi-logarithmically every 16 vals
 
       double delay = 0.0;
-      double scale = .00125;           
+      double scale = .00125;
 
-      while ( value )                  
+      while ( value )
       {
          if ( value < LOG_BUCKET )
          {
@@ -1629,7 +1634,7 @@ class Echotron : public StereoInstrument
       {
          numNotes = num;
          updateDelay();
-      }   
+      }
       else
          numNotes = num;
 
@@ -1637,7 +1642,7 @@ class Echotron : public StereoInstrument
 
    void setMaxNotes( byte num )
    {
-      // range-check num 
+      // range-check num
 
       if ( num < 1 )
          num = 1;
@@ -1653,12 +1658,12 @@ class Echotron : public StereoInstrument
       echoSlot = 0;
       insSlot  = 0;
 
-      // count number of notes within maxNote boundary, 
+      // count number of notes within maxNote boundary,
       // at the same time look for a cleared slot for insSlot
 
       byte count = 0;
       for ( byte i = 0; i < maxNotes; i++ )
-         if ( carousel[i].note == NoNote ) 
+         if ( carousel[i].note == NoNote )
             insSlot = i;
          else
             ++count;
@@ -1693,7 +1698,7 @@ class Echotron : public StereoInstrument
    {
       // If the warp is changing directions, adjust the accumulated warp
       // of each note in the carousel so that when applied the resultant
-      // period will not exceed MAXPERIOD or MINPERIOD. This insures that 
+      // period will not exceed MAXPERIOD or MINPERIOD. This insures that
       // the next echo of the note will begin moving in the new direction.
 
       if ( val > 0 && warp <= 0 )
@@ -1738,7 +1743,7 @@ class Echotron : public StereoInstrument
 
       // make "0" swath ZERO_SWATH times as large as other swaths
 
-      if ( value > ZERO_SWATH )             
+      if ( value > ZERO_SWATH )
          value -= ZERO_SWATH;
       else if ( value > 0 )
          value = 0;
@@ -1750,7 +1755,7 @@ class Echotron : public StereoInstrument
    {
       double reload = delay * dynaRate;
 
-      if ( isoTempo && numNotes > 1 ) 
+      if ( isoTempo && numNotes > 1 )
          reload /= numNotes;
 
       reload += 0.5;
@@ -1762,7 +1767,7 @@ class Echotron : public StereoInstrument
          delayDC = delayRL;
    }
 
-   PROMPT_STR( Echotron ) 
+   PROMPT_STR( Echotron )
 
 #ifdef AUDIT_ECHO
 
@@ -1778,7 +1783,7 @@ StereoInstrument echo;
 
 /******************************************************************************
  *
- *                                  XGain 
+ *                                  XGain
  *
  ******************************************************************************/
 
@@ -1852,18 +1857,18 @@ class XGain : public Factor         // a cheap gain that uses little ROM
          value = gain;
    }
 
-   PROMPT_STR( gain ) 
+   PROMPT_STR( gain )
 
 } ;
 
 
 /******************************************************************************
  *
- *                                  LeadVox0 
+ *                                  LeadVox0
  *
  ******************************************************************************/
 
-class LeadVox0 : public ADSRVoice 
+class LeadVox0 : public ADSRVoice
 {
    typedef ADSRVoice super;               // superclass is ADSRVoice
 
@@ -1891,11 +1896,11 @@ class LeadVox0 : public ADSRVoice
 
 /******************************************************************************
  *
- *                                  LeadVox1 
+ *                                  LeadVox1
  *
  ******************************************************************************/
 
-class LeadVox1 : public LeadVox0 
+class LeadVox1 : public LeadVox0
 {
    typedef LeadVox0 super;               // superclass is LeadVox0
 
@@ -1909,8 +1914,8 @@ class LeadVox1 : public LeadVox0
          pair = new XorOsc( new Sine(), new Sine() );
       #endif
    }
-   
-   boolean charEv( char code )    
+
+   boolean charEv( char code )
    {
       switch ( code )
       {
@@ -1928,7 +1933,7 @@ class LeadVox1 : public LeadVox0
 
          default:
 
-            return super::charEv( code );  
+            return super::charEv( code );
 
       }
    }
@@ -1978,10 +1983,10 @@ class ParmMenu : public Mode           // Runtime parameter menu
    {
       byte slot = readPot(0);
       slot >>= 6;                      // this works only if NUMSLOTS == 4!
-      return slot;                    
+      return slot;
    }
 
-   PROMPT_STR( ParmMenu ) 
+   PROMPT_STR( ParmMenu )
 
 } parmMenu;
 
@@ -1993,7 +1998,7 @@ class ParmMenu : public Mode           // Runtime parameter menu
 
 ByteMenu presetMenu;                // keybrd menu for selecting presets
 
-enum {  // these values enumerate bits in QuadrantSynth::envPotSend 
+enum {  // these values enumerate bits in QuadrantSynth::envPotSend
 
         ENVPOT_LEAD = 1,            // envelope pots control lead voice envelopes
         ENVPOT_ECHO = 2             // envelope pots control Echotron envelopes
@@ -2008,7 +2013,7 @@ class QuadrantSynth : public VoxSynth
 
    public:
 
-   // The audio balance between the echo and the lead voice is determined 
+   // The audio balance between the echo and the lead voice is determined
    // by the state var balance. It can range between the following values:
    //
    //    balance = 0   --> audio: 1/2 echo output + 1/2 lead output
@@ -2016,18 +2021,18 @@ class QuadrantSynth : public VoxSynth
 
    byte   balance;                  // audio balance between echo and lead
    byte   scaleEcho;                // scaling coefficent for echo output
-   byte   scaleLead;                // scaling coefficent for lead output               
+   byte   scaleLead;                // scaling coefficent for lead output
 
    double lfoSkew;                  // amount to skew LFO frequencies in stereo
 
-   byte envPotSend;                 // controls which envelopes are effected by pots  
+   byte envPotSend;                 // controls which envelopes are effected by pots
 
    void config()
    {
       configVoices(2);
 
       setFrameDimensions( 2, 2 );   // dimensions of embedded user interface frame
-      
+
       // configure master envelope to control envelopes of lead voices
 
       env.setNumSlaves(2);
@@ -2043,19 +2048,19 @@ class QuadrantSynth : public VoxSynth
       return new TweekedHarmonicTuning(); // use custom tuning
    }
 
-   // Note: newOsc() will never be called (back) by the system because all 
-   // oscillators in this sketch are allocated and registered via useOsc() 
-   // within their respective voice constructors, and the system only calls 
+   // Note: newOsc() will never be called (back) by the system because all
+   // oscillators in this sketch are allocated and registered via useOsc()
+   // within their respective voice constructors, and the system only calls
    // newOsc() for voices that have a NULL osc ptr after newVox() for that
-   // voice has been called. However, we override newOsc() here simply to 
-   // avoid having the newOsc() method of the super class linked in -- 
+   // voice has been called. However, we override newOsc() here simply to
+   // avoid having the newOsc() method of the super class linked in --
    // which costs an extra 400 bytes of ROM!
 
    Osc *newOsc( byte nth )                // create nth osc -- NEVER CALLED
    {
-      return NULL;                   
+      return NULL;
    }
-      
+
    Voice *newVox( byte nth )              // create nth voice
    {
       if ( nth == 0 )
@@ -2063,7 +2068,7 @@ class QuadrantSynth : public VoxSynth
       else
          return &leadVox1;
    }
-      
+
    bool charEv( char code )            // process a character event
    {
       switch ( code )
@@ -2080,7 +2085,7 @@ class QuadrantSynth : public VoxSynth
 
          #ifdef DEBUG
          case 'i':                     // give info on notes in carousel
-         
+
             echo.side[0]->infoNotes();
             echo.side[1]->infoNotes();
             console.newprompt();
@@ -2140,7 +2145,7 @@ class QuadrantSynth : public VoxSynth
             super::charEv( code );
 
             enableFrame();             // use embedded user-interface frame
-            
+
             envPotSend = ENVPOT_LEAD + ENVPOT_ECHO;
 
             echo.reset();
@@ -2148,7 +2153,7 @@ class QuadrantSynth : public VoxSynth
 
             env.reset();
             env.setMute( false );
-            env.execute( PSTR( "ed50\\s36\\r110\\" ) );  
+            env.execute( PSTR( "ed50\\s36\\r110\\" ) );
 
             execute( PSTR( "1d-26\\" ) );
 
@@ -2157,7 +2162,7 @@ class QuadrantSynth : public VoxSynth
 
          default:
 
-            return super::charEv( code );  
+            return super::charEv( code );
       }
       return true;
    }
@@ -2174,19 +2179,19 @@ class QuadrantSynth : public VoxSynth
       if ( handlePots(e) ) return true;      // handle any pot events
 
       switch ( e.type() )
-      {     
+      {
          case BUT0_DTAP:                     // push parameter menu
 
             console.pushMode( &parmMenu );
             break;
 
-         case BUT1_DTAP:                     // run a preset 
+         case BUT1_DTAP:                     // run a preset
 
             presetMenu.waitKey();            // user selects preset by pressing key
             runPreset( (const char *)presets.dataPtr( presetMenu.value ) );
             break;
 
-         default:       
+         default:
 
             return super::evHandler(e);      // pass other events through
       }
@@ -2196,7 +2201,7 @@ class QuadrantSynth : public VoxSynth
    bool handlePots( obEvent ev )             // handle pot events
    {
       if ( ! ev.amPot() )                    // return false if not a pot event
-         return false;                       
+         return false;
 
       byte potVal = ev.getPotVal();          // cache pot value
 
@@ -2206,7 +2211,7 @@ class QuadrantSynth : public VoxSynth
 
          /*             FRAME 00             */
 
-         case POT0_F00:                      // set warp 
+         case POT0_F00:                      // set warp
 
             echo.setWarpViaPot(potVal);
             break;
@@ -2218,33 +2223,33 @@ class QuadrantSynth : public VoxSynth
 
          /*             FRAME 10             */
 
-         case POT0_F10:                      // set feedback 
+         case POT0_F10:                      // set feedback
 
             echo.setFeedbackViaPot(potVal);
             break;
 
-         case POT1_F10:                      // set balance 
+         case POT1_F10:                      // set balance
 
             setBalance(potVal);
             break;
 
          /*             FRAME 20             */
 
-         case POT0_F20:                      // pan freq 
-         case POT1_F20:                      // pan depth 
+         case POT0_F20:                      // pan freq
+         case POT1_F20:                      // pan depth
 
             panControl.potEv(ev);
             break;
 
          /*             FRAME 01             */
 
-         case POT0_F01:                      // autowah freq 
+         case POT0_F01:                      // autowah freq
 
             echo.side[0]->autowah->lfo.potEv(ev);
             echo.side[1]->autowah->lfo.setFreq( echo.side[0]->autowah->lfo.getFreq() * lfoSkew );
             break;
 
-         case POT1_F01:                      // autowah depth  
+         case POT1_F01:                      // autowah depth
 
             echo.side[0]->autowah->lfo.potEv(ev);
             echo.side[1]->autowah->lfo.potEv(ev);
@@ -2258,7 +2263,7 @@ class QuadrantSynth : public VoxSynth
                echo.side[i]->autowah->setCutoff( potVal );
             break;
 
-         case POT1_F11:                      // echotron pulse width 
+         case POT1_F11:                      // echotron pulse width
 
             echo.setPwViaPot( potVal );
             break;
@@ -2278,7 +2283,7 @@ class QuadrantSynth : public VoxSynth
                // transpose lead 1 by between -24 and 24 semitones
 
                int transpose  = potVal;
-               if (transpose >= 254 ) transpose = 256; 
+               if (transpose >= 254 ) transpose = 256;
                    transpose -= 128;
                    transpose *= 48;
                    transpose >>= 8;
@@ -2301,7 +2306,7 @@ class QuadrantSynth : public VoxSynth
 
             break;
                                              // set decay for envelopes
-         case POT1_F02:                       
+         case POT1_F02:
 
             if ( envPotSend & ENVPOT_LEAD )
                env.setDecay( potVal );
@@ -2327,7 +2332,7 @@ class QuadrantSynth : public VoxSynth
 
             break;
                                              // set release for envelopes
-         case POT1_F12:                       
+         case POT1_F12:
 
             if ( envPotSend & ENVPOT_LEAD )
                env.setRelease( potVal );
@@ -2341,18 +2346,18 @@ class QuadrantSynth : public VoxSynth
 
          /*             FRAME 22             */
 
-         case POT0_F22:                      // set sustime  
+         case POT0_F22:                      // set sustime
 
             #ifdef AUDIT_ECHO
             echo.env.setSusTime( potVal );
             #endif
-            break; 
+            break;
 
-         case POT1_F22:                      // set lead portamento  
+         case POT1_F22:                      // set lead portamento
 
             leadVox0.setGlide( potVal );
             leadVox1.setGlide( potVal );
-            break; 
+            break;
 
       }
       return true;
@@ -2427,11 +2432,11 @@ class QuadrantSynth : public VoxSynth
 
    void welcome()
    {
-      presets.load( myPresets );               
+      presets.load( myPresets );
 
-      // set up preset 0 
+      // set up preset 0
 
-      // runPreset( (const char *)presets.dataPtr( 0 ) ); 
+      // runPreset( (const char *)presets.dataPtr( 0 ) );
 
    }
 
@@ -2460,20 +2465,20 @@ bool ParmMenu::evHandler( obEvent ev )
                   echo.carousel[i].hold = false;
                break;
 
-            case 2:                 // 'D'  sets hold for next note played 
+            case 2:                 // 'D'  sets hold for next note played
 
                echo.hold = true;
                break;
 
             #endif // AUDIT_ECHO
 
-            case 3:                 // 'D#' 
+            case 3:                 // 'D#'
 
                break;
 
             #ifdef AUDIT_ECHO
 
-            case 4:                 // 'E'  toggle lead voices on/off 
+            case 4:                 // 'E'  toggle lead voices on/off
 
                mySynth.toggleLead();
                break;
@@ -2518,7 +2523,7 @@ bool ParmMenu::evHandler( obEvent ev )
          }
 
          break;
-      
+
       case KEY_UP:
 
          console.popMode();
@@ -2526,10 +2531,10 @@ bool ParmMenu::evHandler( obEvent ev )
 
       default:                      // pass other events to superclass
 
-         return super::evHandler(ev);      
+         return super::evHandler(ev);
    }
 
-   return true;                 
+   return true;
 }
 
 
@@ -2618,11 +2623,11 @@ inline void sendByte(unsigned char byte) {
 /*
 
   The following three functions are the public API:
-  
-  ledSetup() - set up the pin that is connected to the string. Call once at the begining of the program.  
+
+  ledSetup() - set up the pin that is connected to the string. Call once at the begining of the program.
   sendPixel(r, g, b) - send a single pixel to the string. Call this once for each pixel in a frame.
-  show() - show the recently sent pixel on the LEDs . Call once per frame. 
-  
+  show() - show the recently sent pixel on the LEDs . Call once per frame.
+
 */
 
 
@@ -2672,17 +2677,17 @@ void show() {
 /*
 
   That is the whole API. What follows are some demo functions rewriten from the AdaFruit strandtest code...
-  
+
   https://github.com/adafruit/Adafruit_NeoPixel/blob/master/examples/strandtest/strandtest.ino
-  
+
   Note that we always turn off interrupts while we are sending pixels becuase an interupt
   could happen just when we were in the middle of somehting time sensitive.
-  
-  If we wanted to minimize the time interrupts were off, we could instead 
-  get away with only turning off interrupts just for the very brief moment 
-  when we are actually sending a 0 bit (~1us), as long as we were sure that the total time 
+
+  If we wanted to minimize the time interrupts were off, we could instead
+  get away with only turning off interrupts just for the very brief moment
+  when we are actually sending a 0 bit (~1us), as long as we were sure that the total time
   taken by any interrupts + the time in our pixel generation code never exceeded the reset time (5us).
-  
+
 */
 
 
@@ -2712,18 +2717,18 @@ void showColor(unsigned char r, unsigned char g, unsigned char b) {
 /*
 void colorWipe(unsigned char r , unsigned char g, unsigned char b, unsigned char wait ) {
   for (unsigned int i=0; i<NUM_PIXELS; i++) {
-    
+
     cli();
     unsigned int p=0;
-    
+
     while (p++<=i) {          // as we go through the wipe, the first pixels get the RGB color
         sendPixel(r, g, b);
-    } 
-     
-    while (p++<=NUM_PIXELS) {     //    and the last pixels are off
-        sendPixel(0, 0, 0);  
     }
-    
+
+    while (p++<=NUM_PIXELS) {     //    and the last pixels are off
+        sendPixel(0, 0, 0);
+    }
+
     sei();
 
     show();
@@ -2743,27 +2748,27 @@ void colorWipe(unsigned char r , unsigned char g, unsigned char b, unsigned char
 /*
 #define THEATER_SPACING (NUM_PIXELS/20)
 void theaterChase( unsigned char r , unsigned char g, unsigned char b, unsigned char wait ) {
-  
-  for (int j=0; j< 3 ; j++) {  
+
+  for (int j=0; j< 3 ; j++) {
     for (int q=0; q < THEATER_SPACING ; q++) {
       unsigned int step=0;
-      
+
       cli();
-      
+
       for (int i=0; i < NUM_PIXELS ; i++) {
         if (step==q) {
           sendPixel(r, g, b);
         } else {
           sendPixel(0, 0, 0);
         }
-        
+
         step++;
-        
+
         if (step==THEATER_SPACING) step = 0;
       }
-      
+
       sei();
-      
+
       show();
       delay(wait);
     }
@@ -2784,45 +2789,45 @@ void theaterChase( unsigned char r , unsigned char g, unsigned char b, unsigned 
 **********************/
 /*
 void rainbowCycle(unsigned char frames , unsigned int frameAdvance, unsigned int pixelAdvance, unsigned char wait ) {
-  
+
   // Hue is a number between 0 and 3*256 that defines a mix of r->g->b where
   // hue of 0 = Full red
   // hue of 128 = 1/2 red and 1/2 green
   // hue of 256 = Full Green
   // hue of 384 = 1/2 green and 1/2 blue
   // ...
-  
+
   unsigned int firstPixelHue = 0;     // Color for the first pixel in the string
-  
-  for (unsigned int frameCount=0; frameCount<frames; frameCount++) {                                  
+
+  for (unsigned int frameCount=0; frameCount<frames; frameCount++) {
     unsigned int currentPixelHue = firstPixelHue;
-       
-    cli();    
-        
+
+    cli();
+
     for (unsigned int i=0; i<PIXELS; i++) {
       if ( currentPixelHue >= (3*256) ) {                  // wrap the Hue value around when we incremented and overflowed
         currentPixelHue -= (3*256);
       }
-            
+
       unsigned char phase = currentPixelHue >> 8;
       unsigned char step = currentPixelHue & 0xff;
       switch (phase) {
-        case 0: 
+        case 0:
           sendPixel(~step, step,  0);
           break;
-        case 1: 
+        case 1:
           sendPixel(0, ~step, step);
           break;
-        case 2: 
+        case 2:
           sendPixel(step, 0, ~step);
           break;
       }
-      
-      currentPixelHue += pixelAdvance;                                      
-    } 
-    
+
+      currentPixelHue += pixelAdvance;
+    }
+
     sei();
-    
+
     show();
     firstPixelHue += frameAdvance;
     delay(wait);
@@ -2841,12 +2846,12 @@ void rainbowCycle(unsigned char frames , unsigned int frameAdvance, unsigned int
 void detonate( unsigned char r , unsigned char g , unsigned char b , unsigned int startdelayms) {
 
   while (startdelayms) {
-    showColor(r, g, b);      // Flash the color 
+    showColor(r, g, b);      // Flash the color
     showColor(0, 0, 0);
-    delay(startdelayms);      
+    delay(startdelayms);
     startdelayms =  (startdelayms*4) / 5 ;           // delay between flashes is halved each time until zero
   }
-  
+
   // Then we fade to black....
   for (int fade=256; fade>0; fade--) {
     showColor( (r * fade) / 256 , (g*fade) /256 , (b*fade)/256 );
@@ -2943,10 +2948,10 @@ void loop() {
 //     So, the lines of code for controlling the RGB LEDs are only executed
 //        every LED_COUNT times through each section of the loop().
 //     I chose the value of LED_COUNT empirically, so that there is at least 250ms after sending RGB color values to the LEDs.
-//     That both guarantees that the LEDs will display their new RGB color values, 
+//     That both guarantees that the LEDs will display their new RGB color values,
 //        as well as not degrading the audio quality of the synth too much.
 unsigned int ledCount;  // to count times through each section of the loop() before performing next step in controlling RGB LEDs
-const uint16_t LED_COUNT = 11000;      // 
+const uint16_t LED_COUNT = 11000;      //
 const uint16_t WHEEL_CONST = 256 / NUM_PIXELS;
 const unsigned char frames = 128;      // the number of Hues to cycle through on the LED string
 const unsigned int frameAdvance = 23;  // the number of Hues to cycle through on the LED string
@@ -3005,7 +3010,7 @@ void loop() {
 
 // loop()     For the SEC-T Synth Badge, there is an option to not control the RGB LEDs,
 //               which will make the audio quality of the Synth be the same as for the ArduTouch board
-//               (but the 5 RGB LEDs will remain off).  
+//               (but the 5 RGB LEDs will remain off).
 //               (It will also free a few more bytes for hacking the synth code.)
 #ifdef SECT_BADGE_PROJ
    #ifdef RGB_NO
