@@ -101,3 +101,12 @@ _Click on the image below to learn how to play with it:_
 <a href="https://github.com/user-attachments/files/16901048/Quadrant_Synth_User_Guide.pdf"><img src="https://github.com/user-attachments/assets/9ba05948-aa36-4cce-a8c9-c9a45c3a8a30" align="center" width="400"></a>  
   
   
+  
+  
+---
+## Schematic Diagram
+
+_Click on the thumbnail below to to see the PDF file:_  
+<a href="https://github.com/user-attachments/files/16918384/SEC-T_0x10sion_Badge_schematic.pdf"><img src="https://github.com/user-attachments/assets/cf107937-fef4-4f8a-adfe-5f01dac5e2ce" align="center" width="400"></a>  
+  
+  
