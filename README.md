@@ -46,19 +46,21 @@ _Click on the image below to open a PDF file with detailed instructions on how t
   
   
 ---
-## Demo Videos
+## "Quadrant" Synth Demo Videos
 
 The Synth Badge comes pre-programmed with a synth called __Quadrant__.  
 Quadrant is somewhat like a looper.  Every time you play a note it goes into the loop.  You can control the speed of the loop, and you can also make the sound warp (detune) every time through the loop.  
+  
 There is the default patch for Quadrant, plus 4 presets -- all 5 of these have very different sounds!  
 In addition to changing the loop speed and changing the warp-factor, there are many parameters that you can play with, some of which change the sounds in subtle ways, others which change the sounds a lot.  
 
 These demo videos give you a very small taste of the various sounds Quadrant can make. 
 
-___NOTE__:  The demo videos use the prototype of the SEC-T 0x10sion Music Synthesizer Badge kit._  
-In particular, the two red buttons are reversed (left and right).  
+___NOTE__:  The demo videos use the prototype version of the SEC-T 0x10sion Music Synthesizer Badge kit._  
+There are some differences between the prototype version and the badges at the event.  In particular, the two red buttons are reversed (left and right).  
 
-__Basic Functionality of Quadrant__  
+__Basic Functionality of Quadrant__:  
+* At power-up (or after Reset), Quadrant is in the Default Patch
 * Single-Click the right red button to go up an octave
 * Single-Click the left red button to go down an octave
 * Double-Click the right red button and then hit one of the first four lower touch-keys to choose a preset
@@ -73,8 +75,10 @@ __Basic Functionality of Quadrant__
 * Pot A controls tremelo speed
 * Pot B controls tremelo depth
 * Press-and-hold on the left and right red buttons will make the Red and Blue LEDs light or blink, indicating that the four Pots will now control different parameters.  
-
-### Default Patch _-- click on the image below to play the video_
+  
+See the next section, "Quadrant Synth User Guide", for a complete description of all that the Quadrant Synth can do.  
+  
+### Default Patch (at power-up and after Reset) _-- click on the image below to play the video_
 [![Thumb for Default Patch demo](https://img.youtube.com/vi/8XAPtq4mnFQ/0.jpg)](https://www.youtube.com/watch?v=8XAPtq4mnFQ)  
 
 ### Preset "C" -- Scaffold _-- click on the image below to play the video_
@@ -101,6 +105,32 @@ _Click on the image below to learn how to play with it:_
 <a href="https://github.com/user-attachments/files/16901048/Quadrant_Synth_User_Guide.pdf"><img src="https://github.com/user-attachments/assets/9ba05948-aa36-4cce-a8c9-c9a45c3a8a30" align="center" width="400"></a>  
   
   
+---
+## Re-programming the Synth Badge
+
+The Synth Badge can be re-programmed using the free Arduino software (on Windows, Linux, and MacOS).  
+The end pages of the [Synth Assembly Instructions](https://github.com/user-attachments/files/16896082/SEC-T_0x10sion_badge_assembly_part_2of2.pdf) explain how to do this.  
+To re-program your Synth Badge you will need to use a USB-Serial TTL adapter.  
+  
+The Synth Badge comes pre-programmed with the __Quadrant__ synth.  
+  
+There are 8 other synths that were developed for the open hardware_ArduTouch_ project (which the Synth Badge is based on), all of which will work on the SEC-T Synth Badge.  But you should be aware of the following:  
+* The Synth Badge has 5 programmable RGB LEDs that the _ArduTouch_ boards do not have.  
+* The __Quadrant__ synth sketch (from the Synth Badge's Github) has code for controlling the RGB LEDs, but the _ArduTouch synth sketches do not -- though this functionality can be added by you or others.  
+* The Synth Badge does not have touch-keys for "A, A#, or B).
+  
+All of the documentation for [ArduTouch](https://cornfieldelectronics.com/cfe/projects.php#ardutouch), including the synth sketches, is available on the Cornfield Electronics website:  
+https://cornfieldelectronics.com/cfe/projects.php#ardutouch  
+  
+Here is a list of ArduTouch synths that you can program into your Synth Badge:
+* __Thick__: 4-voice sawtooth synth
+* __Arpology__: Arpegiating synth
+* __Beatitude__: drum sequencer with bass synth
+* __Dronetic__: drone-making synth
+* __Hocus__: Hammond organ (with Leslie) emulator synth
+* __Mantra__: Indian-like percusion/bass/drone/melody synth
+* __Xoid__: Digital-noise synth
+* __ZapShot__: 8-bit video-game-sound synth
   
   
 ---
@@ -108,5 +138,3 @@ _Click on the image below to learn how to play with it:_
 
 _Click on the thumbnail below to to see the PDF file:_  
 <a href="https://github.com/user-attachments/files/16918384/SEC-T_0x10sion_Badge_schematic.pdf"><img src="https://github.com/user-attachments/assets/cf107937-fef4-4f8a-adfe-5f01dac5e2ce" align="center" width="400"></a>  
-  
-  
