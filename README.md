@@ -134,7 +134,30 @@ Here is a list of ArduTouch synths that you can program into your Synth Badge:
   
   
 ---
+## A Note on the (Horrible) User Interface for the Quadrant Synth
+
+As noted in the [Quadrant Synth User Guide](https://github.com/user-attachments/files/16901048/Quadrant_Synth_User_Guide.pdf) (see the "Quadrant Synth User Guide", above), the User Interface is really annoying.  
+
+The following is quoted from the Quadrant Synth User Guide:  
+  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_You will be annoyed at the User Interface for this synth.  Sorry about that.  The reason that it is so annoying  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;is that there are so few Input/Output pins available on the microcontroller.  There were only enough I/O pins  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for 2 LED indicators, 2 Buttons, and 4 Pots._  
+  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_I had to come up with a way to control all of the functionality of the Quadrant synth with only the above inputs  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;and outputs.  The result is not ideal.  Yet, with some practice, you will find that your Quadrant synth is quite  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;usable as a really nice performing musical instrument._  
+  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_FYI:  I chose this microcontroller to be the same as the one used in an Arduino Uno:  ATmega328.  This was so  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that the project would be easy to use for beginners, easy to learn for beginners, easy to hack, and also as  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;inexpensive as possible._  
+
+  
+---
 ## Schematic Diagram
 
 _Click on the thumbnail below to to see the PDF file:_  
 <a href="https://github.com/user-attachments/files/16918384/SEC-T_0x10sion_Badge_schematic.pdf"><img src="https://github.com/user-attachments/assets/cf107937-fef4-4f8a-adfe-5f01dac5e2ce" align="center" width="400"></a>  
+  
+  
+  
